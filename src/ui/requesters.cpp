@@ -58,8 +58,8 @@ LPREQUESTER Current_Requester;
 int Req_Pressed_Button;
 int Req_Default_Button;
 static int Cancel_Button;
-SDL_TEXTURE *Req_Picture;
-SDL_TEXTURE *Req_Back;
+PTK_TEXTURE *Req_Picture;
+PTK_TEXTURE *Req_Back;
 #if defined(__USE_OPENGL__)
 GLuint Req_Picture_GL = -1;
 #endif
@@ -250,7 +250,7 @@ int Display_Requester(LPREQUESTER Requester, int Action, char *Text, int Center)
     Pos_Y = (CONSOLE_HEIGHT - Size_Y) / 2;
 
 #if !defined(__USE_OPENGL__)
-    Req_Back = Create_SDL_Texture(Size_X + 1, Size_Y + 1);
+    Req_Back = Create_Texture(Size_X + 1, Size_Y + 1);
     if(Req_Back)
     {
         Copy_To_Surface(Main_Screen, Req_Back, 0, 0,
@@ -274,13 +274,6 @@ int Check_Requester(LPREQUESTER Requester)
         if(Req_Picture)
         {
             // Display the picture
-            Gui_Draw_Button_Box(Pos_X, Pos_Y, Size_X, Size_Y, NULL, BUTTON_NORMAL | BUTTON_DISABLED);
-            Gui_Draw_Button_Box(Pos_X + BEVEL_SIZE - 1, Pos_Y + BEVEL_SIZE - 1,
-                                Size_X - ((BEVEL_SIZE - 1) * 2), Size_Y - ((BEVEL_SIZE - 1) * 2),
-                                NULL, BUTTON_PUSHED | BUTTON_DISABLED);
-            Gui_Draw_Button_Box(Pos_X + (BEVEL_SIZE + 1), Pos_Y + (BEVEL_SIZE + 1),
-                                Size_X - ((BEVEL_SIZE + 1) * 2), Size_Y - ((BEVEL_SIZE + 1) * 2),
-                                NULL, BUTTON_NORMAL | BUTTON_DISABLED);
             Set_Color(COL_PATTERN_HI_BACK);
             Copy(GET_SURFACE(Req_Picture), Pos_X + BEVEL_SIZE + 1, Pos_Y + BEVEL_SIZE + 1,
                  0, 0, Req_Picture->w - 1, Req_Picture->h - 2);
@@ -427,7 +420,7 @@ void Kill_Requester(void)
              0, 0,
              Pos_X + Size_X + 1,
              Pos_Y + Size_Y + 1);
-        Destroy_SDL_Texture(Req_Back);
+        Destroy_Texture(Req_Back);
         Req_Back = NULL;
         if(Req_Picture)
         {
